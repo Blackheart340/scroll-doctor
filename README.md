@@ -1,5 +1,6 @@
 #Scroll Doctor Plugin
 If you have some trouble's with touch/track pad or mousewell direction detect, Scroll Doctor help you!
+##[DEMO](http://blackheart340.github.io/scroll-doctor/)
 
 ##Use
 
