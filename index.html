@@ -10,6 +10,8 @@
     <script src="scrollDoctor.js"></script>
 
     <script>
+        var doctor = new ScrollDoctor();
+
         var app = {
             addArrow: function(dir){
                 var arrow = '<i class="fa fa-arrow-' + dir + '"></i>';
@@ -27,8 +29,6 @@
             }
         };
 
-        var doctor = new ScrollDoctor();
-
         var onMouseWheel = function(event){
             doctor
                 .analize(event.deltaY)
@@ -38,9 +38,6 @@
                         },
                         bottomUp: function(){
                             app.addArrow('down');
-                        },
-                        scroll: function(){
-//                            console.log('!');
                         }
                     })
         };
@@ -55,5 +52,29 @@
     <h1>ScrollDoctor Demo</h1>
     <div class="last"></div>
     <div class="tracking"></div>
+
+    <h2>Use</h2>
+    <pre>
+        var doctor = new ScrollDoctor();
+
+        var callbacks = {
+            topUp: function(){
+                //some action
+            },
+            bottomUp: function(){
+                //other action
+            }
+        };
+
+        var onMouseWheel = function(event){
+            doctor
+                .analize(event.deltaY)
+                .watcher(callbacks)
+        };
+
+        $(document).ready(function(){
+            $(document).on('mousewheel', onMouseWheel);
+        });
+    </pre>
 </body>
 </html>
