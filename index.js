@@ -3,6 +3,7 @@ var ScrollDoctor = function(){
     this.lastDirection = false;
     this.flowState = [];
     this.fullDelts = [];
+    this.visialisateData = 0;
 
     this.defaultOptions = {
         topUp: function(){ },
@@ -11,21 +12,17 @@ var ScrollDoctor = function(){
         bottomDown: function(){ },
         scroll: function(){ }
     };
+
 };
 
-ScrollDoctor.prototype.doctor = function(delta) {
+ScrollDoctor.prototype.analize = function(){
     this.fullDelts.push(delta);
 
     if(this.fullDelts.length < 3) {
         return;
     }
 
-    this.analize();
 
-    return this;
-};
-
-ScrollDoctor.prototype.analize = function(){
     var delts = this.fullDelts.reverse(),
         stateRange = 5,
         st = {
@@ -98,10 +95,12 @@ ScrollDoctor.prototype.watcher = function(opts){
 };
 
 
-ScrollDoctor.prototype.visyalize = function(delta){
+ScrollDoctor.prototype.visyalize = function(delta, options){
     var dotNotSmoth = $('<div></div>');
 
     this.visialisateData.i++;
+
+
 
     dotNotSmoth
         .attr('style', this.visialisateData.style)
