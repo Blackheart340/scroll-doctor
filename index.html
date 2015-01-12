@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>ScrollDoctor demo</title>
+    <link rel="stylesheet" href="demo/style.css"/>
+    <link rel="stylesheet" href="demo/font-awesome.css"/>
+    <script src="http://yastatic.net/jquery/2.1.3/jquery.min.js"></script>
+    <script src="demo/mousewell.js"></script>
+    <script src="scrollDoctor.js"></script>
+
+    <script>
+        var app = {
+            addArrow: function(dir){
+                var arrow = '<i class="fa fa-arrow-' + dir + '"></i>';
+                var tracking = $('.tracking');
+                var last = $('.last');
+
+                var arrows = tracking.find('.fa');
+
+                if(arrows.length > 20) {
+                    arrows[0].remove();
+                }
+
+                tracking.append(arrow);
+                last.html(arrow);
+            }
+        };
+
+        var doctor = new ScrollDoctor();
+
+        var onMouseWheel = function(event){
+            doctor
+                .analize(event.deltaY)
+                .watcher({
+                        topUp: function(){
+                            app.addArrow('up');
+                        },
+                        bottomUp: function(){
+                            app.addArrow('down');
+                        },
+                        scroll: function(){
+//                            console.log('!');
+                        }
+                    })
+        };
+
+        $(document).ready(function(){
+            $(document).on('mousewheel', onMouseWheel);
+        });
+    </script>
+
+</head>
+<body>
+    <h1>ScrollDoctor Demo</h1>
+    <div class="last"></div>
+    <div class="tracking"></div>
+</body>
+</html>

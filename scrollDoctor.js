@@ -15,7 +15,7 @@ var ScrollDoctor = function(){
 
 };
 
-ScrollDoctor.prototype.analize = function(){
+ScrollDoctor.prototype.analize = function(delta){
     this.fullDelts.push(delta);
 
     if(this.fullDelts.length < 3) {
@@ -72,21 +72,27 @@ ScrollDoctor.prototype.analize = function(){
 
     this.direction = direction;
 
+    clearTimeout(this.timer);
+    this.timer = setTimeout(this.clearDirection.bind(this), 130);
+
     return this;
 
 };
 
+ScrollDoctor.prototype.clearDirection = function(){
+    this.direction = false;
+    this.flowState = [];
+};
+
 ScrollDoctor.prototype.watcher = function(opts){
-    var options = opts || this.defaultOptions;
+    var options = $.extend(this.defaultOptions, opts);
 
     if(this.direction !== this.lastDirection) {
 
         this.direction === 'top-up' && options.topUp();
         this.direction === 'bottom-up' && options.bottomUp();
-
-//        crash code lines
-//        this.direction === 'top-down' && options.topDown();
-//        this.direction === 'bottom-down' && options.bottomDown();
+        this.direction === 'top-down' && options.topDown();
+        this.direction === 'bottom-down' && options.bottomDown();
 
         (this.direction === 'top-up' || this.direction === 'bottom-up') && options.scroll();
     }
@@ -99,8 +105,6 @@ ScrollDoctor.prototype.visyalize = function(delta, options){
     var dotNotSmoth = $('<div></div>');
 
     this.visialisateData.i++;
-
-
 
     dotNotSmoth
         .attr('style', this.visialisateData.style)
