@@ -15,7 +15,7 @@ $(document).on('mousewheel', function(event){
 
 ```
 
-##Vizyalize
+##Visualization
 
 ```js
 
